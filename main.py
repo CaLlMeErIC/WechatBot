@@ -140,7 +140,9 @@ class WeChatBot:
                 module_instance = self.module_mapping[command_sign]
                 reply = module_instance.process_messages(nickname, content)
             else:
-                reply = "对不起，暂时还没有这个功能"
+                # 如果没有特殊命令，就直接调用聊天模块
+                module_instance = self.module_mapping["聊天"]
+                reply = module_instance.process_messages(nickname, content, directly=True)
             return reply
         except Exception as exception:
             print(traceback.format_exc())
